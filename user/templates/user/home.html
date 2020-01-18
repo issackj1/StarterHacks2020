@@ -1,0 +1,61 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="text-center">
+    <div class="abs">
+        <canvas id="c"></canvas>
+    </div>
+</div>
+
+<script>
+    function makeScene(resource){
+        var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+        
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+
+        var light = new THREE.AmbientLight(0xffffff);
+        scene.add(light);
+
+        renderer = new THREE.WebGLRenderer({alpha: true});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = true;
+        controls.autoRotate = true;
+        controls.maxDistance = 5;
+        controls.minDistance = 3.3;
+
+        camera.position.set(100,0,0);
+        camera.lookAt(new THREE.Vector3(0,1500,0))
+        controls.update();
+
+
+        var loader = new THREE.GLTFLoader();
+        var model;
+
+        // Load a glTF resource
+        loader.load(resource, function (gltf){
+            model = gltf.scene;
+            scene.add(model);
+
+            gltf.animations; 
+            gltf.scenes;
+            gltf.cameras;
+        }, undefined, function(error){
+            console.error(error);
+        });
+
+        document.body.appendChild(renderer.domElement);
+        animate();
+
+        function animate(){
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+    }
+    const card = makeScene('../../static/user/food.glb');
+</script>
+{% endblock %}
