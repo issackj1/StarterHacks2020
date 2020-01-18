@@ -10,6 +10,9 @@ class User(models.Model):
     current_weight = models.DecimalField(max_digits=10, decimal_places=2)
     desired_weight = models.DecimalField(max_digits=10, decimal_places=2)
     increment = models.DecimalField(max_digits=10, decimal_places=2)
+    protein = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    carbs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    fat = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     email = models.EmailField(max_length=254)
     date = models.DateTimeField(default=timezone.now)
     def __str__(self):
