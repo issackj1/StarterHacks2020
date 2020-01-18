@@ -1,4 +1,7 @@
+from datetime import datetime
 from django.db import models
+from django.utils import timezone
+
 
 # Create your models here.
 class User(models.Model):
@@ -8,7 +11,7 @@ class User(models.Model):
     desired_weight = models.DecimalField(max_digits=10, decimal_places=2)
     increment = models.DecimalField(max_digits=10, decimal_places=2)
     email = models.EmailField(max_length=254)
-    date = models.DateTimeField(default=datetime.now())
+    date = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return "{} {} {}".format(self.first_name, self.last_name, self.email)
         
