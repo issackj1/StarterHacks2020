@@ -39,7 +39,8 @@ def CalorieConversion(request):
      current_weight = cur_weight, desired_weight = des_weight,
      increment = abs_increment, protein = des_protein, carbs = des_carbs,
      fat = des_fat, email = form.cleaned_data['Email'],
-     date=form.cleaned_data['Date']).save()
+     date=form.cleaned_data['Date'],
+     calorie=cur_calorie).save()
      
 def search_box(request, input):
     response = requests.get(
@@ -80,6 +81,18 @@ def FoodView(request, user_choices):
         "fat": fat,
         "carbs": carbs,
         "protein": protein
+    }
+    remaining = 0
+
+    if (person_data.desired_weight > person_data.current_weight) remaining = person_data.calorie + person_data.increment
+    elif (person_data.desired_weight < person_data.current_weight)remaining = person_data.calorie - person_data.increment
+    else remaining = person_data.calorie
+
+    food = {
+        "protein": ["1 chicken breast", "1 steak", "2 large eggs", "1 fillet salmon", "1 fillet cod"],
+        "carbs": ["1 medium sweet potato", "1 cup rice", "1 medium potato", "1 cup quinoa", "1 cup brown rice"],
+        "veg": ["2 cups spinach", "1 cup mixed vegetables", "2 cups chopped broccoli", "5 spears asparagus"],
+        "fruits": ["6 large strawberry", "1 cup blackberry", "1 medium banana", "1 cup blueberry", "1 large apple"]
     }
 
     return render(request, "", context)
