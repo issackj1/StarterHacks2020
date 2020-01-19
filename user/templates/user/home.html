@@ -14,7 +14,8 @@
                     <div style="margin: auto;" class="text mt-md-5 justify-content-center">
                         <h1 style="font-size: 100px;" class="mb-4">Foodify</h1>
                         <hr>
-                        <h1 class="mb-4">Healthy for you. Healthy for us.</h1>
+                        <h1 style="font-size: 30px;" class="mb-4">Healthy for you! Healthy for
+                            us!</h1>
                         <p><a href="{% url 'user:dashboard' %}"
                                 class="btn btn-primary px-4 py-3 mt-3 justify-content-center">Get
                                 Started</a></p>
@@ -44,7 +45,40 @@
                         can be avoidable per year.</p>
                     <hr>
                     <p>This is equal to <b>100 kg</b>.</p>
+                    <hr>
+                    <p>In the US alone, the production of lost or
+                        wasted food generates the equivalent of 37
 
+                        million cars’ worth of greenhouse gas
+
+                        emissions.*</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br><br>
+<hr><br><br>
+
+<section class="ftco-section ftco-wrap-about ftco-no-pb ftco-no-pt">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-sm-7 wrap-about py-5 ftco-animate">
+                <div class="heading-section mt-5 mb-4">
+                    <div class="pl-lg-5 ml-md-5">
+                        <h2 style="font-size: 40px;" class="mb-4">What we Do</h2>
+                    </div>
+                </div>
+
+                <ul>
+                    <li>Plann daily meals</li>
+                    <li>Help You Reach an appropriate, desired weight</li>
+                    <li>Decreasing unnecessary spending on food</li>
+                    <li>Eliminating food waste</li>
+                </ul>
+                <div class="pl-lg-5 ml-md-5">
                     <h3 class="mt-5">It's simple!</h3>
                     <div class="thumb my-4 d-flex">
                         <a href="#" class="thumb-menu pr-md-4 text-center">
@@ -65,399 +99,62 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-5 img img-2 d-flex align-items-center justify-content-center justify-content-md-end"
+                style="background-image: url({% static '/home/images/wineguy.png' %}); position: relative">
+            </div>
         </div>
     </div>
 </section>
 
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center mb-5 pb-2">
-            <div class="col-md-7 text-center heading-section ftco-animate">
-                <span class="subheading">Specialties</span>
-                <h2 class="mb-4">Our Menu</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-4 menu-wrap">
-                <div class="heading-menu text-center ftco-animate">
-                    <h3>Breakfast</h3>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img"
-                        style="background-image: url({% static '/home/images/breakfast-1.jpg' %});"></div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Beef with potatoes</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img"
-                        style="background-image: url({% static '/home/images/breakfast-2.jpg' %});"></div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img"
-                        style="background-image: url({% static '/home/images/breakfast-3.jpg' %})"></div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-            </div>
+<script>
+    function makeScene(resource) {
+        var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-            <div class="col-md-6 col-lg-4 menu-wrap">
-                <div class="heading-menu text-center ftco-animate">
-                    <h3>Lunch</h3>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/lunch-1.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Beef with potatoes</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/lunch-2.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/lunch-3.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-            </div>
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
 
-            <div class="col-md-6 col-lg-4 menu-wrap">
-                <div class="heading-menu text-center ftco-animate">
-                    <h3>Dinner</h3>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/dinner-1.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Beef with potatoes</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/dinner-2.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/dinner-3.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-            </div>
+        var light = new THREE.AmbientLight(0xffffff);
+        scene.add(light);
 
-            <!--  -->
-            <div class="col-md-6 col-lg-4 menu-wrap">
-                <div class="heading-menu text-center ftco-animate">
-                    <h3>Desserts</h3>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/dessert-1.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Beef with potatoes</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/dessert-2.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/dessert-3.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-            </div>
+        renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-            <div class="col-md-6 col-lg-4 menu-wrap">
-                <div class="heading-menu text-center ftco-animate">
-                    <h3>Wine Card</h3>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/wine-1.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Beef with potatoes</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/wine-2.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/wine-3.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-            </div>
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = true;
+        controls.autoRotate = true;
+        controls.maxDistance = 5;
+        controls.minDistance = 3.3;
 
-            <div class="col-md-6 col-lg-4 menu-wrap">
-                <div class="heading-menu text-center ftco-animate">
-                    <h3>Drinks</h3>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/drink-1.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Beef with potatoes</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/drink-2.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-                <div class="menus d-flex ftco-animate">
-                    <div class="menu-img img" style="background-image: url({% static '/home/images/drink-3.jpg' %});">
-                    </div>
-                    <div class="text">
-                        <div class="d-flex">
-                            <div class="one-half">
-                                <h3>Grilled Crab with Onion</h3>
-                            </div>
-                            <div class="one-forth">
-                                <span class="price">$29</span>
-                                <small><span>400 Cals</span></small>
-                            </div>
-                        </div>
-                        <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center ftco-animate">
-                <p><a href="#" class="btn btn-black py-3 px-5">View All Menu</a></p>
-            </div>
-        </div>
-    </div>
-    <script>
-        function makeScene(resource) {
-            var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(100, 0, 0);
+        camera.lookAt(new THREE.Vector3(0, 1500, 0));
+        controls.update();
 
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xffffff);
 
-            var light = new THREE.AmbientLight(0xffffff);
-            scene.add(light);
+        var loader = new THREE.GLTFLoader();
+        var model;
 
-            renderer = new THREE.WebGLRenderer({ alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
+        // Load a glTF resource
+        loader.load(resource, function (gltf) {
+            model = gltf.scene;
+            scene.add(model);
 
-            var controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableZoom = true;
-            controls.autoRotate = true;
-            controls.maxDistance = 5;
-            controls.minDistance = 3.3;
+            gltf.animations;
+            gltf.scenes;
+            gltf.cameras;
+        }, undefined, function (error) {
+            console.error(error);
+        });
 
-            camera.position.set(100, 0, 0);
-            camera.lookAt(new THREE.Vector3(0, 1500, 0));
+        document.body.appendChild(renderer.domElement);
+        animate();
+
+        function animate() {
+            requestAnimationFrame(animate);
             controls.update();
-
-
-            var loader = new THREE.GLTFLoader();
-            var model;
-
-            // Load a glTF resource
-            loader.load(resource, function (gltf) {
-                model = gltf.scene;
-                scene.add(model);
-
-                gltf.animations;
-                gltf.scenes;
-                gltf.cameras;
-            }, undefined, function (error) {
-                console.error(error);
-            });
-
-            document.body.appendChild(renderer.domElement);
-            animate();
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
+            renderer.render(scene, camera);
         }
+    }
 
-        const card = makeScene('../../static/user/food.glb');
-    </script>
-    {% endblock %}
+    const card = makeScene('../../static/user/food.glb');
+</script>
+{% endblock %}
