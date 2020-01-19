@@ -105,6 +105,37 @@
         </div>
     </div>
 </section>
+<hr>
+
+<section class="home-slider js-fullheight owl-carousel bg-white">
+    <div class="slider-item js-fullheight">
+
+        <div class="overlay"></div>
+
+        <div class="container-fluid">
+
+            <div style="padding: 120px 0px;"
+                class="column no-gutters js-fullheight align-items-center justify-content-center"
+                data-scrollax-parent="true">
+                <div class="heading-section mb-4">
+                    <div class="">
+                        <h2 style="font-size: 40px; text-align: center;" class="mb-4">Our Values</h2>
+                    </div>
+                </div>
+                <img style="margin: auto;max-width: 750px" src="{% static '/home/images/japan.png' %}"></img>
+                <p style="text-align: center;">Honesty | Quality | Growth | Eco-Friendly</p>
+            </div>
+        </div>
+    </div>
+</section>
+<hr>
+
+<section class="margin: auto">
+</section>
+
+<div id="canvas">
+    <canvas></canvas>
+</div>
 
 <script>
     function makeScene(resource) {
@@ -145,7 +176,7 @@
             console.error(error);
         });
 
-        document.body.appendChild(renderer.domElement);
+        document.getElementById('canvas').appendChild(renderer.domElement);
         animate();
 
         function animate() {
