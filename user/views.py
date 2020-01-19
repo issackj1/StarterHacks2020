@@ -59,14 +59,13 @@ def search_box(request, input):
     response = requests.get(
         "https://trackapi.nutritionix.com/v2/search/instant?query=" + input,
         headers = {
-                "x-app-id": "803b50f3",
-                "x-app-key": "2fc47a99e5c716e633452e541f9ef3a3"
+                "x-app-id": "374e42c3",
+                "x-app-key": "a72789b7335359c0904b4d50a3af742e"
                 })
     json_response = response.json()["common"][:5]
     return JsonResponse(json_response, safe=False)
 
 def FoodView(request, user_choices):
-    calories, fat, protein, carbs = 0, 0, 0, 0
     remaining = 0
     person_data = User.objects.get(first_name=request.session.get('fname'), last_name=request.session.get('lname'))
     if (person_data.desired_weight > person_data.current_weight): remaining = person_data.calorie + person_data.increment
@@ -79,9 +78,7 @@ def FoodView(request, user_choices):
     for item in arr:
         choice.append(str(item['serving_qty']) + ' ' + str(item['serving_unit']) + ' ' + item['food_name'])
         
-    calories, fat, protein, carbs, lim = nutrient_req(choice, remaining)
-    remaining = lim
-
+    calories, fat, protein, carbs = nutrient_req(choice, 0, 0, 0, 0, remaining)
 
     food = {
         "breakfast": ["2 large eggs", "3 oz ground turkey", "1 medium muffin", "1 cup oatmeal", "2 pancakes"],
@@ -123,20 +120,15 @@ def FoodView(request, user_choices):
     random.shuffle(food["carbs"])
     random.shuffle(food["veg"])
     random.shuffle(food["fruits"])
-    day = day + food["breakfast"][:2]
-    day = day + food["protein"][:3]
-    day = day + food["carbs"][:3]
-    day = day + food["veg"][:3]
-    day = day + food["fruits"][:2]
+    day = day + food["breakfast"][:1]#2
+    day = day + food["protein"][:1]#3
+    day = day + food["carbs"][:1]#3
+    day = day + food["veg"][:1]#3
+    day = day + food["fruits"][:1]#2
     random.shuffle(day)
     day = day + choice
 
-    cal, ft, pro, cb, limit = nutrient_req(day, remaining)
-
-    calories += cal
-    fat += fat
-    protein += pro
-    carbs += cb
+    cal, ft, pro, cb = nutrient_req(day, calories, fat, protein, carbs, remaining)
 
     grlist, pics = [], []
     html = '<p>Hi ' + request.session['fname'] + ',</p></br>'
@@ -147,22 +139,23 @@ def FoodView(request, user_choices):
         res = requests.get(
         "https://trackapi.nutritionix.com/v2/search/instant?query=" + item,
         headers = {
-                "x-app-id": "803b50f3",
-                "x-app-key": "2fc47a99e5c716e633452e541f9ef3a3"
+                "x-app-id": "374e42c3",
+                "x-app-key": "a72789b7335359c0904b4d50a3af742e"
                 })
         pics.append(res.json()["common"][0]['photo']['thumb'])
         html += '<li>' + pack.get(item, item) + '</li>'
     html += "</ul></br><p>Enjoy,</p><p>Your friends at Fulfilled</p>"
     request.session['html'] = html
-    request.session['macros'] = [calories, fat, carbs, protein]
+    request.session['macros'] = [cal, ft, cb, pro]
     request.session['grocery_list'] = grlist
     request.session['pics'] = pics
 
     context = {
-        "macros": [calories, fat, carbs, protein],
+        "macros": [cal, ft, cb, pro],
         "grocery_list": grlist,
         "pics": pics
     }
+    print(context['macros'])
 
     return render(request, "user/chart.html", context)
 
@@ -172,14 +165,14 @@ def data(request):
     return response
 
 
-def nutrient_req(arr, limit):
-    calories, fat, protein, carbs = 0, 0, 0, 0
+def nutrient_req(arr, cal, fat, protein, carbs, limit):
+    calories, fat, protein, carbs = cal, fat, protein, carbs
     for item in arr:
         response = requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
             headers = {
                 "Content-Type": "application/json",
-                "x-app-id": "803b50f3",
-                "x-app-key": "2fc47a99e5c716e633452e541f9ef3a3"
+                "x-app-id": "374e42c3",
+                "x-app-key": "a72789b7335359c0904b4d50a3af742e"
                 },
             json = {
                 'query': item,
@@ -192,8 +185,7 @@ def nutrient_req(arr, limit):
             fat += int(text['nf_total_fat'])
             carbs += int(text['nf_total_carbohydrate'])
             protein += int(text['nf_protein'])
-            limit -= int(text['nf_calories'])
-    return calories, fat, protein, carbs, limit
+    return calories, fat, protein, carbs
 
 def email(request):
     requests.get(
