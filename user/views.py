@@ -148,7 +148,7 @@ def FoodView(request, user_choices):
         "calories": calories,
         "fat": fat,
         "carbs": carbs,
-        "protein": protein
+        "protein": protein,
         "grocery_list": grlist
     }
 
