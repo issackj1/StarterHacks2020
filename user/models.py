@@ -16,6 +16,9 @@ class User(models.Model):
     calorie = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     email = models.EmailField(max_length=254)
     date = models.DateTimeField(default=timezone.now)
+    class Meta:
+        unique_together = ('first_name', 'last_name', 'email')
+
     def __str__(self):
         return "{} {} {}".format(self.first_name, self.last_name, self.email)
         

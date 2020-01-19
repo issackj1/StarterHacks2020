@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-<input hidden id="grocery_list" value="{{ grocery_list }}"></input>
-<input hidden id="pics_list" value="{{ pics }}"></input>
-<input hidden id="macros" value="{{ macros }}"></input>
+<input type="hidden" id="grocery_list" value="{{ grocery_list }}"></input>
+<input type="hidden" id="pics_list" value="{{ pics }}"></input>
+<input type="hidden" id="macros" value="{{ macros }}"></input>
 
 
 <div class="body-wrapper">
@@ -84,17 +84,10 @@
 
     }
 
-    var grocery_list = document.getElementById('grocery_list').value
-    var pics_list = document.getElementById('pics_list').value
+    var grocery_list = document.getElementById('grocery_list').value.replace(/'/g, '"')
+    var pics_list = document.getElementById('pics_list').value.replace(/'/g, '"')
 
-    console.log("Grocery Value -->", grocery_list)
-    console.log("Pics Value -->", pics_list)
-
-
-    var arr = ["Potatoo", "Stuff", "5 Penus", "Poop"]
-    var arr2 = ["https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f4/Honeycrisp.jpg"]
-
-    populateGroceryList(arr, arr2)
+    populateGroceryList(JSON.parse(grocery_list), JSON.parse(pics_list))
 </script>
 
 <style>

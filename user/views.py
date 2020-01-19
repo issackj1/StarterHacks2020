@@ -1,7 +1,8 @@
 import requests, random, json
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from django.http import JsonResponse, HttpResponse
+from django.urls import reverse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from .models import User
 from .forms import RegisterForm
 from django.shortcuts import redirect
@@ -24,24 +25,25 @@ class ChartView(TemplateView):
 def CalorieConversion(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
+        print(form.errors)
         if form.is_valid():
             cur_weight = form.cleaned_data['cweight']
             des_weight = form.cleaned_data['dweight']
 
-            des_protein = des_weight * 2.6
-            des_carbs = des_weight * 2.6
-            des_fat = des_weight
-            cur_protein = cur_weight * 2.6
-            cur_carbs = cur_weight * 2.6
-            cur_fat = cur_weight
+            des_protein = float(des_weight) * 2.6
+            des_carbs = float(des_weight) * 2.6
+            des_fat = float(des_weight)
+            cur_protein = float(cur_weight) * 2.6
+            cur_carbs = float(cur_weight) * 2.6
+            cur_fat = float(cur_weight)
 
             cur_calorie = (cur_protein * 4) + (cur_carbs * 4) + (cur_fat * 9)
             des_calorie = (des_protein * 4) + (des_carbs * 4) + (des_fat * 9)
             # Absolute value divided by four, for a positive 4 week increment
             abs_increment = round(abs((cur_calorie - des_calorie) / 4), 0)
             name = form.cleaned_data['user'].split(' ')
-            request.session["fname"] = name[0]
-            request.session["lname"] = name[1]
+            request.session['fname'] = name[0]
+            request.session['lname'] = name[1]
             User(first_name = name[0],
             last_name = name[1],
             current_weight = cur_weight, desired_weight = des_weight,
@@ -50,23 +52,23 @@ def CalorieConversion(request):
             calorie=cur_calorie).save()
             return HttpResponseRedirect(reverse('user:search-food'))
         else:
-          form = RegisterForm()
+            form = RegisterForm()
     return render(request, 'user/search.html', {'form': form})
      
 def search_box(request, input):
     response = requests.get(
         "https://trackapi.nutritionix.com/v2/search/instant?query=" + input,
-        headers={
-            "x-app-id": "728a7023",
-            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"}
-        )
+        headers = {
+                "x-app-id": "803b50f3",
+                "x-app-key": "2fc47a99e5c716e633452e541f9ef3a3"
+                })
     json_response = response.json()["common"][:5]
     return JsonResponse(json_response, safe=False)
 
 def FoodView(request, user_choices):
     calories, fat, protein, carbs = 0, 0, 0, 0
     remaining = 0
-    person_data = User.objects.filter(first_name=request.session['fname'], last_name=request.session['lname'])
+    person_data = User.objects.get(first_name=request.session.get('fname'), last_name=request.session.get('lname'))
     if (person_data.desired_weight > person_data.current_weight): remaining = person_data.calorie + person_data.increment
     elif (person_data.desired_weight < person_data.current_weight): remaining = person_data.calorie - person_data.increment
     else: remaining = person_data.calorie
@@ -141,17 +143,20 @@ def FoodView(request, user_choices):
     html += "<p>Here is your weekly grocery shopping list:</p>"
     html += "<ul>"
     for item in day:
-        grlist.append(pack[item])
+        grlist.append(pack.get(item, item))
         res = requests.get(
         "https://trackapi.nutritionix.com/v2/search/instant?query=" + item,
-        headers={
-            "x-app-id": "728a7023",
-            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"}
-        )
+        headers = {
+                "x-app-id": "803b50f3",
+                "x-app-key": "2fc47a99e5c716e633452e541f9ef3a3"
+                })
         pics.append(res.json()["common"][0]['photo']['thumb'])
-        html += '<li>' + pack[item] + '</li>'
+        html += '<li>' + pack.get(item, item) + '</li>'
     html += "</ul></br><p>Enjoy,</p><p>Your friends at Fulfilled</p>"
-    request.sessions['html'] = html
+    request.session['html'] = html
+    request.session['macros'] = [calories, fat, carbs, protein]
+    request.session['grocery_list'] = grlist
+    request.session['pics'] = pics
 
     context = {
         "macros": [calories, fat, carbs, protein],
@@ -173,8 +178,8 @@ def nutrient_req(arr, limit):
         response = requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
             headers = {
                 "Content-Type": "application/json",
-                "x-app-id": "728a7023",
-                "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"
+                "x-app-id": "803b50f3",
+                "x-app-key": "2fc47a99e5c716e633452e541f9ef3a3"
                 },
             json = {
                 'query': item,
@@ -182,15 +187,21 @@ def nutrient_req(arr, limit):
                 }
         )
         text = response.json()['foods'][0]
-        if (calories + text['nf_calories'] < limit):
-            calories += text['nf_calories']
-            fat += text['nf_total_fat']
-            carbs += text['nf_total_carbohydrate']
-            protein += text['nf_protein']
-            limit -= text['nf_calories']
+        if (calories + int(text['nf_calories']) < limit):
+            calories += int(text['nf_calories'])
+            fat += int(text['nf_total_fat'])
+            carbs += int(text['nf_total_carbohydrate'])
+            protein += int(text['nf_protein'])
+            limit -= int(text['nf_calories'])
     return calories, fat, protein, carbs, limit
 
 def email(request):
     requests.get(
     'https://billwu95.api.stdlib.com/grocery@dev/emaillist/?html=' + request.session['html']
     )
+    context = {
+        "macros": request.session['macros'],
+        "grocery_list": request.session['grocery_list'],
+        "pics": request.session['pics']
+    }
+    return render(request, "user/chart.html", context)

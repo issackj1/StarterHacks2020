@@ -5,6 +5,7 @@
 
     <br>
     <br>
+    <input type="hidden" id="final_list"></input>
     <div class="container searchContainer mt-5">
         <div class="search card card-body">
             
@@ -30,18 +31,17 @@
         </div>
         </div>
         <div class='row fixed-bottom col-2 mr-auto mb-5' style="width:800px;margin:0 auto">
-            <a href="#"><button onClick='submit_data()' class='btn btn-primary'type="submit">Submit</button></a>
+            <a id="endpoint_url" href="{% url 'user:details' "a" %}"><button class='btn btn-primary'type="submit">Submit</button></a>
         </div>
     </div>
-
 {% endblock %}
 
 {% block javascript %}
     <script>
+        let grocery_list = []
 
         $(document).ready(function () {
 
-            let grocery_list = []
             
             const searchFood = document.getElementById('searchFood');
             searchFood.addEventListener('keyup', debounce (async e => {
@@ -66,7 +66,7 @@
                 output+=`
                     <li class="row">
                     
-                    <a style="color:black" onClick="clearAll(this)" value="${item.serving_unit}" data-value=${item.photo.thumb} class="food-item" href="#"><img style="width:40px;height="40px"""  src="${item.photo.thumb}" alt=""> ${item.food_name} </a>
+                    <a style="color:black" onClick="clearAll(this)" value="${item.serving_unit}" data-value=${item.photo.thumb} class="food-item" href="#"><img style="width:60%;height="10%"""  src="${item.photo.thumb}" alt=""> ${item.food_name} </a>
                         
                         
                     </li>
@@ -83,7 +83,7 @@
         function clearAll(a){
             let foodList= document.getElementById('food_list');
             let serving_unit = a.getAttribute('value');
-            let serving_qty = 1;
+            let serving_qty = 1.0;
             let src = a.getAttribute('data-value');
             let item = {
                 "food_name": a.innerText,
@@ -98,7 +98,8 @@
                 </li>`)
             $('#searchFood').val('');
             foodList.innerHTML = ''
-            grocery_list.append(item);
+            grocery_list.push(item);
+            $('#endpoint_url').attr("href", "/user/details/"+ JSON.stringify(grocery_list)+"/");
 
         }
         function debounce(func, wait, immediate) {
@@ -115,19 +116,5 @@
                 if (callNow) func.apply(context, args);
             };
         }
-
-        function submit_data(){
-            fetch(`/user/detail/${grocery_list}/`)
-        }
-
-
-            //const picked_food= document.getElementById('picked_food')
-            //picked_food.addEventListener('onclick',e=>{
-              //  console.log(e.target)
-            //})
-
-
-        
-
     </script>
 {% endblock %}

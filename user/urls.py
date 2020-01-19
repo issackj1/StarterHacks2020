@@ -16,7 +16,7 @@ urlpatterns = [
     path('search-food/', views.SearchView.as_view(), name='search-food'),
     path('search/<str:input>/', views.search_box, name='search'),
     path('chart/', views.ChartView.as_view(), name='chart'),
-    path('details/<str:user_choices>/', views.FoodView, name='data'),
+    path('details/<str:user_choices>/', views.FoodView, name='details'),
     path('email', views.email, name='email')
 
 ]
