@@ -160,7 +160,7 @@ def FoodView(request, user_choices):
         "pics": pics
     }
 
-    return render(request, "user/food.html", context)
+    return render(request, "user/chart.html", context)
 
 
 def data(request):
