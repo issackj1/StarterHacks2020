@@ -1,0 +1,75 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+    <div class="col-12 text-center">
+        <h1>Thanks you for using Foodify</h1>
+    </div>
+    <div class="col-md-12 text-center">
+        <h5 class="text-secondary">Please check your email for a grocery list!</h5>
+    </div>
+    </div>
+
+    <div id="canvas">
+        <canvas></canvas>
+    </div>
+
+    <script>
+        function makeScene(resource) {
+            var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xffffff);
+
+            var light = new THREE.AmbientLight(0xffffff);
+            scene.add(light);
+
+            renderer = new THREE.WebGLRenderer({alpha: true});
+            renderer.setSize(window.innerWidth, 600);
+
+            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = true;
+            controls.autoRotate = true;
+            controls.maxDistance = 5;
+            controls.minDistance = 3.3;
+
+            camera.position.set(100, 50, 0);
+            camera.lookAt(new THREE.Vector3(0, 1500, 0));
+            controls.update();
+
+
+            var loader = new THREE.GLTFLoader();
+            var model;
+
+            // Load a glTF resource
+            loader.load(resource, function (gltf) {
+                model = gltf.scene;
+                scene.add(model);
+
+                gltf.animations;
+                gltf.scenes;
+                gltf.cameras;
+            }, undefined, function (error) {
+                console.error(error);
+            });
+
+            document.getElementById('canvas').appendChild(renderer.domElement);
+            animate();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+        }
+
+        const card = makeScene('../../static/user/food.glb');
+    </script>
+
+{% endblock %}

@@ -22,6 +22,9 @@ class SearchView(TemplateView):
 class ChartView(TemplateView):
     template_name = "user/chart.html"
 
+class ThanksView(TemplateView):
+    template_name = "user/thanks.html"
+
 def CalorieConversion(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
