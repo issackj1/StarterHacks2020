@@ -100,5 +100,5 @@ def FoodView(request, user_choices):
     }
 
 def data(request):
-    response = redirect('/food-search/')
+    response = redirect('/user/food-search/')
     return response
