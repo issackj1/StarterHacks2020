@@ -8,13 +8,23 @@
 
 
     <div class="body-wrapper">
-        <h1 style="text-align: center;padding: 20px; font-size: 420%; margin-bottom: 20px;"> Your Calorie Breakdown
-        </h1>
-        <canvas id="myChart"></canvas>
-        <canvas id="barChart"></canvas>
+        <div class="row mb-5">
+            <h2 class="m-auto"> Your Calorie Breakdown
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <canvas id="myChart" class=" w-75 m-auto"></canvas>
+            </div>
+            <div class="col">
+                <canvas id="barChart" class="w-75 m-auto"></canvas>
+            </div>
+        </div>
         <br><br>
-        <h1 style="text-align: center;padding: 20px; font-size: 420%; margin-bottom: 20px;"> Your Grocery List
-        </h1>
+        <div class="row mb-5">
+            <h2 class="m-auto"> Your Grocery List
+            </h2>
+        </div>
 
         <div id="groceryList" style="max-width: 70vw;margin: auto;" class="row">
 
@@ -58,15 +68,15 @@
             }
         });
 
-        let ctx = document.getElementById('barChart').getContext('2d');
+        let ctxx = document.getElementById('barChart').getContext('2d');
 
-        var myBarChart = new Chart(ctx, {
+        var myBarChart = new Chart(ctxx, {
             type: 'bar',
             data: {
                 labels: ['Carbs', 'Protein', 'Vegetables'],
                 datasets: [{
                     label: 'Number of Grams',
-                    data: [macros[2] * 4, macros[3] * 4, macros[1] * 9],
+                    data: [macros[2], macros[3], macros[1]],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -81,7 +91,10 @@
                 }]
 
             },
-            options: options
+            options: {
+                scales: {},
+                xAxisID: "Number of Grams"
+            }
         });
 
         function populateGroceryList(arrNames, arrPictures) {
