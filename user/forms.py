@@ -1,10 +1,10 @@
 from django import forms
 
-class Data(forms.Form):
-    name = forms.CharField(name='name', max_length=100)
-    email = forms.CharField(name='email')
-    cweight = forms.CharField(name='cweight')
-    dweight = forms.CharField(name='dweight')
-    age = forms.CharField(name='age')
-    sex = forms.CharField(name='sex')
-    height = forms.CharField(name='height')
+class RegisterForm(forms.Form):
+    user = forms.CharField()
+    email = forms.EmailField()
+    cweight = forms.CharField()
+    dweight = forms.CharField()
+    age = forms.CharField()
+    sex = forms.CharField()
+    height = forms.CharField()

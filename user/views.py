@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import JsonResponse, HttpResponse
 from .models import User
+from .forms import RegisterForm
 from django.shortcuts import redirect
 
 class HomeView(TemplateView):
@@ -27,26 +28,30 @@ def CalorieConversion(request):
             cur_weight = form.cleaned_data['cweight']
             des_weight = form.cleaned_data['dweight']
 
-    des_protein = des_weight * 2.6
-    des_carbs = des_weight * 2.6
-    des_fat = des_weight
-    cur_protein = cur_weight * 2.6
-    cur_carbs = cur_weight * 2.6
-    cur_fat = cur_weight
+            des_protein = des_weight * 2.6
+            des_carbs = des_weight * 2.6
+            des_fat = des_weight
+            cur_protein = cur_weight * 2.6
+            cur_carbs = cur_weight * 2.6
+            cur_fat = cur_weight
 
-    cur_calorie = (cur_protein * 4) + (cur_carbs * 4) + (cur_fat * 9)
-    des_calorie = (des_protein * 4) + (des_carbs * 4) + (des_fat * 9)
-    # Absolute value divided by four, for a positive 4 week increment
-    abs_increment = round(abs((cur_calorie - des_calorie) / 4), 0)
-    name = form.cleaned_data['name'].split(' ')
-    request.session["fname"] = name[0]
-    request.session["lname"] = name[1]
-    User(first_name = name[0],
-     last_name = name[1],
-     current_weight = cur_weight, desired_weight = des_weight,
-     increment = abs_increment, protein = des_protein, carbs = des_carbs,
-     fat = des_fat, email = form.cleaned_data['email'],
-     calorie=cur_calorie).save()
+            cur_calorie = (cur_protein * 4) + (cur_carbs * 4) + (cur_fat * 9)
+            des_calorie = (des_protein * 4) + (des_carbs * 4) + (des_fat * 9)
+            # Absolute value divided by four, for a positive 4 week increment
+            abs_increment = round(abs((cur_calorie - des_calorie) / 4), 0)
+            name = form.cleaned_data['user'].split(' ')
+            request.session["fname"] = name[0]
+            request.session["lname"] = name[1]
+            User(first_name = name[0],
+            last_name = name[1],
+            current_weight = cur_weight, desired_weight = des_weight,
+            increment = abs_increment, protein = des_protein, carbs = des_carbs,
+            fat = des_fat, email = form.cleaned_data['email'],
+            calorie=cur_calorie).save()
+            return HttpResponseRedirect(reverse('user:search-food'))
+        else:
+          form = RegisterForm()
+    return render(request, 'user/search.html', {'form': form})
      
 def search_box(request, input):
     response = requests.get(
