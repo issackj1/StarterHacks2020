@@ -7,9 +7,6 @@ from .models import User
 class HomeView(TemplateView):
     template_name = "user/home.html"
 
-class AboutView(TemplateView):
-    template_name = "user/about.html"
-
 class DashboardView(TemplateView):
     template_name = "user/dashboard.html"
     
@@ -39,13 +36,13 @@ def CalorieConversion(request):
      fat = des_fat, email = form.cleaned_data['Email'],
      date=form.cleaned_data['Date']).save()
      
-def search_box(input):
+def search_box(request, input):
     response = requests.get(
-        "https://trackapi.nutritionix.com/v2/search/instant?query=".append(input),
+        "https://trackapi.nutritionix.com/v2/search/instant?query=" + input,
         headers={
             "x-app-id": "728a7023",
             "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"}
         )
     json_response = response.json()["common"][:5]
-    return json_response
+    return JsonResponse(json_response, safe=False)
 
