@@ -13,11 +13,11 @@
             </h2>
         </div>
         <div class="row">
-            <div class="col">
-                <canvas id="myChart" class=" w-75 m-auto"></canvas>
+            <div class="col-6">
+                <canvas id="myChart" class="m-auto"></canvas>
             </div>
-            <div class="col">
-                <canvas id="barChart" class="w-75 m-auto"></canvas>
+            <div class="col-6">
+                <canvas id="barChart" class="m-auto"></canvas>
             </div>
         </div>
         <br><br>
@@ -92,8 +92,26 @@
 
             },
             options: {
-                scales: {},
-                xAxisID: "Number of Grams"
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,132,0.2)"
+                        },
+                        ticks: {
+                            min: 0,
+                            callback: function (value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }],
+                    xAxes: [{
+
+                    }]
+                }
             }
         });
 
