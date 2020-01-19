@@ -17,15 +17,15 @@
         <div class="row">
 
         
-        <div id="food_div"class='col-5 ml-0 mr-auto'>
+        <div id="food_div"class='col-4 ml-0 mr-auto'>
             <ul id='food_list'>
 
             </ul>
         </div>
 
-        <div id="picked_food" class='col-3 ml-auto mr-0'>
-            <h3>Your picked items:</h3>
-            <ul id='confirmed_list'>
+        <div id="picked_food" class='col-5 mr-0'>
+            <h3>Chosen Items:</h3>
+            <ul id='confirmed_list' class="list-unstyled row">
 
             </ul>
         </div>
@@ -91,7 +91,7 @@
                 "serving_qty": serving_qty
             }
 
-            $('#confirmed_list').append(`<li class="row">
+            $('#confirmed_list').append(`<li class="col-5">
                     
                 ${a.innerHTML}
                     

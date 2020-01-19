@@ -13,6 +13,9 @@
             </h2>
         </div>
         <div class="row">
+            <p id="totalCalories" class="m-auto">Total Calories: </p>
+        </div>
+        <div class="row">
             <div class="col-6">
                 <canvas id="myChart" class="m-auto"></canvas>
             </div>
@@ -26,8 +29,10 @@
             </h2>
         </div>
 
-        <div id="groceryList" style="max-width: 70vw;margin: auto;" class="row">
+        <div class="container">
+            <div class="row" id="groceryList">
 
+            </div>
         </div>
     </div>
     <div class="row">
@@ -42,6 +47,8 @@
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var macros = JSON.parse(document.getElementById('macros').value);
+
+        document.getElementById('totalCalories').innerText = `Total Calories: ${macros[0]}`;
 
         var myChart = new Chart(ctx, {
             type: 'pie',
@@ -75,7 +82,7 @@
             data: {
                 labels: ['Carbs', 'Protein', 'Vegetables'],
                 datasets: [{
-                    label: 'Number of Grams',
+                    label: 'Grams',
                     data: [macros[2], macros[3], macros[1]],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -95,10 +102,6 @@
                 scales: {
                     yAxes: [{
                         stacked: true,
-                        gridLines: {
-                            display: true,
-                            color: "rgba(255,99,132,0.2)"
-                        },
                         ticks: {
                             min: 0,
                             callback: function (value, index, values) {
@@ -108,9 +111,7 @@
                             }
                         }
                     }],
-                    xAxes: [{
-
-                    }]
+                    xAxes: [{}]
                 }
             }
         });
@@ -122,21 +123,38 @@
                 console.log(element)
                 bodyToAppend.innerHTML +=
                     `
-            <div  class="col-md-6 col-lg-4 menu-wrap">
-
+        <div class="col-md-3 col-lg-4 menu-wrap">
             <div class="menus d-flex ftco-animate">
                 <div class="menu-img img" style="background-image: url(${arrPictures[index]});">
                 </div>
                 <div class="text">
                     <div class="d-flex">
                         <div class="three-half">
-                            <h3 style="position: relative; top: 20px;">${element}</h3>
+                            <h5 style="position: relative; top: 20px;">${element}</h3>
                         </div>
                     </div>
                 </div>
                 </div>
-            </div>`
+         `
             });
+
+            /*
+            <div class="menus d-flex ftco-animate">
+              <div class="menu-img img" style="background-image: url(images/breakfast-1.jpg);"></div>
+              <div class="text">
+              	<div class="d-flex">
+	                <div class="one-half">
+	                  <h3>Grilled Beef with potatoes</h3>
+	                </div>
+	                <div class="one-forth">
+	                  <span class="price">$29</span>
+	                </div>
+	              </div>
+	              <p><span>Meat</span>, <span>Potatoes</span>, <span>Rice</span>, <span>Tomatoe</span></p>
+              </div>
+            </div>
+
+             */
 
         }
 
