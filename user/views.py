@@ -1,5 +1,4 @@
-import requests
-import json
+import requests, random, json
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import JsonResponse, HttpResponse
@@ -93,11 +92,26 @@ def FoodView(request, user_choices):
     else: remaining = person_data.calorie
 
     food = {
-        "protein": ["1 chicken breast", "1 steak", "2 large eggs", "1 fillet salmon", "1 fillet cod"],
+        "breakfast": ["2 large eggs", "3 oz ground turkey", "1 medium muffin", "1 cup oatmeal", "2 pancakes"],
+        "protein": ["1 chicken breast", "1 steak", "1 fillet salmon", "1 fillet cod", "8 large shrimps"],
         "carbs": ["1 medium sweet potato", "1 cup rice", "1 medium potato", "1 cup quinoa", "1 cup brown rice"],
         "veg": ["2 cups spinach", "1 cup mixed vegetables", "2 cups chopped broccoli", "5 spears asparagus"],
         "fruits": ["6 large strawberry", "1 cup blackberry", "1 medium banana", "1 cup blueberry", "1 large apple"]
     }
+    meal = []
+    random.shuffle(food["breakfast"])
+    random.shuffle(food["protein"])
+    random.shuffle(food["carbs"])
+    random.shuffle(food["veg"])
+    random.shuffle(food["fruits"])
+    meal = meal + food["breakfast"][:3]
+    meal = meal + food["protein"][:3]
+    meal = meal + food["carbs"][:3]
+    meal = meal + food["veg"][:3]
+    meal = meal + food["fruits"][:2]
+
+    return render(request, "user/food.html", context)
+
 
 def data(request):
     response = redirect('/user/search-food/')
