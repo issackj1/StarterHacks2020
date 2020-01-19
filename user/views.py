@@ -7,6 +7,9 @@ from .models import User
 class HomeView(TemplateView):
     template_name = "user/home.html"
 
+class AboutView(TemplateView):
+    template_name = "user/about.html"
+
 class DashboardView(TemplateView):
     template_name = "user/dashboard.html"
     
