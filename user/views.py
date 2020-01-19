@@ -81,6 +81,33 @@ def FoodView(request, user_choices):
         "veg": ["2 cups spinach", "1 cup mixed vegetables", "2 cups chopped broccoli", "5 spears asparagus"],
         "fruits": ["6 large strawberry", "1 cup blackberry", "1 medium banana", "1 cup blueberry", "1 large apple"]
     }
+    pack = {
+        "2 large eggs": "12 pack eggs",
+        "3 oz ground turkey": "1 pack ground turkey",
+        "1 medium muffin": "6 pack muffins",
+        "1 cup oatmeal": "1 pack oatmeal",
+        "2 pancakes": "1 pack pancakes",
+        "1 chicken breast": "1 pack chicken breasts",
+        "1 steak": "1 pack steak",
+        "1 fillet salmon": "1 pack salmon",
+        "1 fillet cod": "1 pack cod",
+        "8 large shrimps": "1 pack shrimp",
+        "1 medium sweet potato": "2 medium sweet potato",
+        "1 cup rice": "2 packs rice",
+        "1 medium potato": "2 medium potatoes",
+        "1 cup quinoa": "1 box quinoa",
+        "1 cup brown rice": "2 packs brown rice",
+        "2 cups spinach": "1 pack baby spinach",
+        "1 cup mixed vegetables": "1 pack mixed vegetables",
+        "2 cups chopped broccoli": "1 head of broccoli",
+        "5 spears asparagus": "1 bundle of asparagus",
+        "6 large strawberry": "1 pack strawberries",
+        "1 cup blackberry": "1 pack blackberries",
+        "1 medium banana": "1 hand of bananas",
+        "1 cup blueberry": "1 pack of blueberries",
+        "1 large apple": "3 large apples"
+    }
+
     day = []
     random.shuffle(food["breakfast"])
     random.shuffle(food["protein"])
@@ -88,10 +115,11 @@ def FoodView(request, user_choices):
     random.shuffle(food["veg"])
     random.shuffle(food["fruits"])
     day = day + food["breakfast"][:2]
-    day = day + food["protein"][:2]
-    day = day + food["carbs"][:2]
-    day = day + food["veg"][:2]
+    day = day + food["protein"][:3]
+    day = day + food["carbs"][:3]
+    day = day + food["veg"][:3]
     day = day + food["fruits"][:2]
+    random.shuffle(day)
     day = day + choice
 
     cal, ft, pro, cb, limit = nutrient_req(day, remaining)
@@ -101,11 +129,25 @@ def FoodView(request, user_choices):
     protein += pro
     carbs += cb
 
+    grlist = []
+    html = '<p>Hi ' + request.session['fname'] + ',</p></br>'
+    html += "<p>Here is your weekly grocery shopping list:</p></br>"
+    html += "<ul>"
+    for item in day:
+        grlist.append(pack[item])
+        html += '<li>' + pack[item] + '</li>'
+    html += "</ul></br><p>Enjoy,</p></br><p>Your friends at Fulfilled</p>"
+
+    requests.get(
+    'https://billwu95.api.stdlib.com/grocery@dev/emaillist/?html=' + html
+    )
+
     context = {
         "calories": calories,
         "fat": fat,
         "carbs": carbs,
         "protein": protein
+        "grocery_list": grlist
     }
 
     return render(request, "user/food.html", context)
