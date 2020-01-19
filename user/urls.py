@@ -14,5 +14,7 @@ urlpatterns = [
     #path('personaldata/', views.PersonalData.as_view(), name='personaldata'),
     url(r'^data$', views.data, name='data'),
     path('search/<str:input>/', views.search_box, name='search')
-
+    path('search-food/', views.SearchView.as_view(), name='search-food'),
+    path('search/<str:input>/', views.search_box, name='search'),
+    path('details/<str:user_choices>/', views.FoodView, name='data')
 ]

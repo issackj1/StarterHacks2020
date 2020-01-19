@@ -1,4 +1,5 @@
 import requests
+import json
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import JsonResponse, HttpResponse
@@ -10,8 +11,12 @@ class HomeView(TemplateView):
 
 class AboutView(TemplateView):
      template_name = "user/about.html"
+
 class DashboardView(TemplateView):
     template_name = "user/dashboard.html"
+
+class SearchView(TemplateView):
+    template_name = "user/search.html"
     
 
 def CalorieConversion(request):
@@ -51,18 +56,34 @@ def search_box(request, input):
     return JsonResponse(json_response, safe=False)
 
 def FoodView(request, user_choices):
-    for item in user_choices:
-        requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
-        headers = {
-            "Content-Type": "application/json",
-            "x-app-id": "728a7023",
-            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"},
+    calories, fat, protein, carbs = 0, 0, 0, 0
+    arr = json.loads(user_choices)
+    for item in arr:
+        response = requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
+            headers = {
+                "Content-Type": "application/json",
+                "x-app-id": "728a7023",
+                "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"
+                },
             json = {
-                'query': item['serving_qty'] + ' ' + item['serving_unit']
-                + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
-        
-    return render(request.text, "", context)
+                'query': str(item['serving_qty']) + ' ' + 
+                str(item['serving_unit'])
+                + ' ' + item['food_name'], 'timezone': "US/Eastern"
+                }
+        )
 
-def data(request):
-    response = redirect('/food-search/')
-    return response
+        text = response.json()['foods'][0]
+        calories += text['nf_calories']
+        fat += text['nf_total_fat']
+        carbs += text['nf_total_carbohydrate']
+        protein += text['nf_protein']
+
+    person_data = User.objects.filter(first_name=request.sessions['firstname'], last_name=request.sessions['lastname'])
+    context = {
+        "calories": calories,
+        "fat": fat,
+        "carbs": carbs,
+        "protein": protein
+    }
+
+    return render(request, "", context)

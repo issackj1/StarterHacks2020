@@ -8,9 +8,9 @@
             <div class="container-fluid p-0">
                 <div class="row d-md-flex no-gutters slider-text js-fullheight align-items-center justify-content-end"
                      data-scrollax-parent="true">
-                    <div class="one-third order-md-last img js-fullheight"
-                         style="background-image:url({% static '/home/images/bg_3.jpg' %});">
-                        <div class="overlay"></div>
+                    <div class="one-third order-md-last img js-fullheight">
+                        <!--<canvas id="c"></canvas>-->
+                        <div class="overlay"><canvas id="c"></canvas></div>
                     </div>
                     <div class="one-forth d-flex js-fullheight align-items-center ftco-animate"
                          data-scrollax=" properties: { translateY: '70%' }">
@@ -34,45 +34,8 @@
                                     <h4>Australian Organic Beef</h4>
                                 </a>
                             </div>
-                            <p><a href="{% url 'user:dashboard' %}" class="btn btn-primary px-4 py-3 mt-3">Get Started</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="slider-item js-fullheight">
-            <div class="overlay"></div>
-            <div class="container-fluid p-0">
-                <div class="row d-flex no-gutters slider-text js-fullheight align-items-center justify-content-end"
-                     data-scrollax-parent="true">
-                    <div class="one-third order-md-last img js-fullheight"
-                         style="background-image:url({% static '/home/images/bg_2.jpg' %});">
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="one-forth d-flex js-fullheight align-items-center ftco-animate"
-                         data-scrollax=" properties: { translateY: '70%' }">
-                        <div class="text mt-md-5">
-                            <h1 class="mb-4">We Love <br> Delicious Foods</h1>
-                            <p>StarterHacks2020</p>
-                            <div class="thumb mt-4 mb-3 d-flex">
-                                <a href="#" class="thumb-menu pr-md-4 text-center">
-                                    <div class="img"
-                                         style="background-image: url({% static '/home/images/menu-1.jpg' %});"></div>
-                                    <h4>Australian Organic Beef</h4>
-                                </a>
-                                <a href="#" class="thumb-menu pr-md-4 text-center">
-                                    <div class="img"
-                                         style="background-image: url({% static '/home/images/menu-2.jpg' %});"></div>
-                                    <h4>Australian Organic Beef</h4>
-                                </a>
-                                <a href="#" class="thumb-menu pr-md-4 text-center">
-                                    <div class="img"
-                                         style="background-image: url({% static '/home/images/menu-3.jpg' %});"></div>
-                                    <h4>Australian Organic Beef</h4>
-                                </a>
-                            </div>
-                            <p><a href="#" class="btn btn-primary px-4 py-3 mt-3">Get Started</a></p>
+                            <p><a href="{% url 'user:dashboard' %}" class="btn btn-primary px-4 py-3 mt-3">Get
+                                Started</a></p>
                         </div>
                     </div>
                 </div>
@@ -466,53 +429,54 @@
             </div>
         </div>
         <script>
-    function makeScene(resource) {
-        var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+            function makeScene(resource) {
+                var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-        scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff);
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xffffff);
 
-        var light = new THREE.AmbientLight(0xffffff);
-        scene.add(light);
+                var light = new THREE.AmbientLight(0xffffff);
+                scene.add(light);
 
-        renderer = new THREE.WebGLRenderer({ alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer = new THREE.WebGLRenderer({alpha: true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
 
-        var controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableZoom = true;
-        controls.autoRotate = true;
-        controls.maxDistance = 5;
-        controls.minDistance = 3.3;
+                var controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableZoom = true;
+                controls.autoRotate = true;
+                controls.maxDistance = 5;
+                controls.minDistance = 3.3;
 
-        camera.position.set(100, 0, 0);
-        camera.lookAt(new THREE.Vector3(0, 1500, 0))
-        controls.update();
+                camera.position.set(100, 0, 0);
+                camera.lookAt(new THREE.Vector3(0, 1500, 0));
+                controls.update();
 
 
-        var loader = new THREE.GLTFLoader();
-        var model;
+                var loader = new THREE.GLTFLoader();
+                var model;
 
-        // Load a glTF resource
-        loader.load(resource, function (gltf) {
-            model = gltf.scene;
-            scene.add(model);
+                // Load a glTF resource
+                loader.load(resource, function (gltf) {
+                    model = gltf.scene;
+                    scene.add(model);
 
-            gltf.animations;
-            gltf.scenes;
-            gltf.cameras;
-        }, undefined, function (error) {
-            console.error(error);
-        });
+                    gltf.animations;
+                    gltf.scenes;
+                    gltf.cameras;
+                }, undefined, function (error) {
+                    console.error(error);
+                });
 
-        document.body.appendChild(renderer.domElement);
-        animate();
+                document.body.appendChild(renderer.domElement);
+                animate();
 
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
-        }
-    }
-    const card = makeScene('../../static/user/food.glb');
-</script>
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+            }
+
+            const card = makeScene('../../static/user/food.glb');
+        </script>
 {% endblock %}
