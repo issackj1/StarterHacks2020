@@ -57,7 +57,5 @@ def FoodView(request, user_choices):
             json = {
                 'query': item['serving_qty'] + ' ' + item['serving_unit']
                 + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
-
-        
         
     return render(request.text, "", context)
