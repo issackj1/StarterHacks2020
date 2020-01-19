@@ -10,7 +10,7 @@
 
  - If for the average person, they waste 1 pound of food per week. That equates to 48 pounds of CO2 emmisions per year. That is the same as driving 57 miles, which does not even include the environemental impact of the transportation of the food.
 
- - This is where Foodify comes into play.
+ - This is where *Foodify* comes into play.
 
  - *Foodify*, the new innovative platform assists you in not only eliminating your food waste but also helps you plan what to buy and how much to buy to aid in healthy eating.
 
@@ -28,4 +28,4 @@
 
  - Then, for your convinence we include the possibilty of emailing you your customly generated shopping list.
 
-*Thank you for your interest, we hope you enjoy using Foodify*
+# *Thank you for your interest, we hope you enjoy using Foodify*
