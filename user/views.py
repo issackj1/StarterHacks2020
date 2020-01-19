@@ -131,12 +131,19 @@ def FoodView(request, user_choices):
     protein += pro
     carbs += cb
 
-    grlist = []
+    grlist, pics = [], []
     html = '<p>Hi ' + request.session['fname'] + ',</p></br>'
     html += "<p>Here is your weekly grocery shopping list:</p>"
     html += "<ul>"
     for item in day:
         grlist.append(pack[item])
+        res = requests.get(
+        "https://trackapi.nutritionix.com/v2/search/instant?query=" + item,
+        headers={
+            "x-app-id": "728a7023",
+            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"}
+        )
+        pics.append(res.json()["common"][0]['photo']['thumb'])
         html += '<li>' + pack[item] + '</li>'
     html += "</ul></br><p>Enjoy,</p><p>Your friends at Fulfilled</p>"
 
@@ -149,7 +156,8 @@ def FoodView(request, user_choices):
         "fat": fat,
         "carbs": carbs,
         "protein": protein,
-        "grocery_list": grlist
+        "grocery_list": grlist,
+        "pics": pics
     }
 
     return render(request, "user/food.html", context)
