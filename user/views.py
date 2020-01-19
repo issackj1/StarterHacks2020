@@ -16,7 +16,9 @@ class DashboardView(TemplateView):
 
 class SearchView(TemplateView):
     template_name = "user/search.html"
-    
+
+class ChartView(TemplateView):
+    template_name = "user/chart.html"
 
 def CalorieConversion(request):
     if request.method == 'POST':
@@ -116,3 +118,5 @@ def FoodView(request, user_choices):
 def data(request):
     response = redirect('/user/search-food/')
     return response
+
+
