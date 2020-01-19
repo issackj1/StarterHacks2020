@@ -17,12 +17,11 @@
     </div>
 
     <div id="canvas">
-        <canvas></canvas>
     </div>
 
     <script>
         function makeScene(resource) {
-            var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+            var camera = new THREE.PerspectiveCamera(85, window.innerWidth / window.innerHeight, 0.1, 1000);
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xffffff);
