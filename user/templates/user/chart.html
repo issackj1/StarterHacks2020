@@ -2,70 +2,95 @@
 {% load static %}
 
 {% block content %}
-<input type="hidden" id="grocery_list" value="{{ grocery_list }}"></input>
-<input type="hidden" id="pics_list" value="{{ pics }}"></input>
-<input type="hidden" id="macros" value="{{ macros }}"></input>
+    <input type="hidden" id="grocery_list" value="{{ grocery_list }}"></input>
+    <input type="hidden" id="pics_list" value="{{ pics }}"></input>
+    <input type="hidden" id="macros" value="{{ macros }}"></input>
 
 
-<div class="body-wrapper">
-    <h1 style="text-align: center;padding: 20px; font-size: 420%; margin-bottom: 20px;"> Your Calorie Breakdown
-    </h1>
-    <canvas id="myChart"></canvas>
+    <div class="body-wrapper">
+        <h1 style="text-align: center;padding: 20px; font-size: 420%; margin-bottom: 20px;"> Your Calorie Breakdown
+        </h1>
+        <canvas id="myChart"></canvas>
+        <canvas id="barChart"></canvas>
+        <br><br>
+        <h1 style="text-align: center;padding: 20px; font-size: 420%; margin-bottom: 20px;"> Your Grocery List
+        </h1>
+
+        <div id="groceryList" style="max-width: 70vw;margin: auto;" class="row">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center ftco-animate">
+            <p><a href="{% url 'user:email' %}" class="btn btn-black py-3 px-5">Email Grocery List</a></p>
+        </div>
+    </div>
     <br><br>
-    <h1 style="text-align: center;padding: 20px; font-size: 420%; margin-bottom: 20px;"> Your Grocery List
-    </h1>
-
-    <div id="groceryList" style="max-width: 70vw;margin: auto;" class="row">
-
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12 text-center ftco-animate">
-        <p><a href="{% url 'user:email' %}" class="btn btn-black py-3 px-5">Email Grocery List</a></p>
-    </div>
-</div>
-<br><br>
-</div>
 
 
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var macros = document.getElementById('macros').value
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var macros = document.getElementById('macros').value;
 
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Carbs', 'Protein', 'Vegetables'],
-            datasets: [{
-                label: 'Number of Calories',
-                data: [macros[2]*4, macros[3]*4, macros[1]*9],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Carbs', 'Protein', 'Vegetables'],
+                datasets: [{
+                    label: 'Number of Calories',
+                    data: [macros[2] * 4, macros[3] * 4, macros[1] * 9],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {}
             }
-        }
-    });
+        });
 
-    function populateGroceryList(arrNames, arrPictures) {
-        var bodyToAppend = document.getElementById('groceryList')
+        let ctx = document.getElementById('barChart').getContext('2d');
 
-        arrNames.forEach((element, index) => {
-            console.log(element)
-            bodyToAppend.innerHTML +=
-                `
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Carbs', 'Protein', 'Vegetables'],
+                datasets: [{
+                    label: 'Number of Grams',
+                    data: [macros[2] * 4, macros[3] * 4, macros[1] * 9],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+
+            },
+            options: options
+        });
+
+        function populateGroceryList(arrNames, arrPictures) {
+            var bodyToAppend = document.getElementById('groceryList')
+
+            arrNames.forEach((element, index) => {
+                console.log(element)
+                bodyToAppend.innerHTML +=
+                    `
             <div  class="col-md-6 col-lg-4 menu-wrap">
 
             <div class="menus d-flex ftco-animate">
@@ -80,30 +105,33 @@
                 </div>
                 </div>
             </div>`
-        });
+            });
 
-    }
+        }
 
-    var grocery_list = document.getElementById('grocery_list').value.replace(/'/g, '"')
-    var pics_list = document.getElementById('pics_list').value.replace(/'/g, '"')
+        var grocery_list = document.getElementById('grocery_list').value.replace(/'/g, '"')
+        var pics_list = document.getElementById('pics_list').value.replace(/'/g, '"')
 
-    populateGroceryList(JSON.parse(grocery_list), JSON.parse(pics_list))
-</script>
+        console.log("Grocery Value -->", grocery_list)
+        console.log("Pics Value -->", pics_list)
 
-<style>
-    #groceryList {
-        padding-top: 50px;
-        border: 2px solid rgba(243, 241, 239, .7);
-    }
+        populateGroceryList(JSON.parse(grocery_list), JSON.parse(pics_list))
+    </script>
 
-    .body-wrapper {
-        margin-top: 120px;
-        padding: 20px;
-    }
+    <style>
+        #groceryList {
+            padding-top: 50px;
+            border: 2px solid rgba(243, 241, 239, .7);
+        }
 
-    #myChart {
-        width: 10px;
-    }
-</style>
+        .body-wrapper {
+            margin-top: 120px;
+            padding: 20px;
+        }
+
+        #myChart {
+            width: 10px;
+        }
+    </style>
 
 {% endblock %}
