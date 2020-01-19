@@ -17,6 +17,7 @@ urlpatterns = [
     path('search/<str:input>/', views.search_box, name='search'),
     path('chart/', views.ChartView.as_view(), name='chart'),
     path('details/<str:user_choices>/', views.FoodView, name='details'),
-    path('email', views.email, name='email')
+    path('email', views.email, name='email'),
+    path('thanks/', views.ThanksView.as_view(), name='thanks')
 
 ]
