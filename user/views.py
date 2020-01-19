@@ -146,16 +146,10 @@ def FoodView(request, user_choices):
         pics.append(res.json()["common"][0]['photo']['thumb'])
         html += '<li>' + pack[item] + '</li>'
     html += "</ul></br><p>Enjoy,</p><p>Your friends at Fulfilled</p>"
-
-    requests.get(
-    'https://billwu95.api.stdlib.com/grocery@dev/emaillist/?html=' + html
-    )
+    request.sessions['html'] = html
 
     context = {
-        "calories": calories,
-        "fat": fat,
-        "carbs": carbs,
-        "protein": protein,
+        "macros": [calories, fat, carbs, protein],
         "grocery_list": grlist,
         "pics": pics
     }
@@ -190,3 +184,8 @@ def nutrient_req(arr, limit):
             protein += text['nf_protein']
             limit -= text['nf_calories']
     return calories, fat, protein, carbs, limit
+
+def email(request):
+    requests.get(
+    'https://billwu95.api.stdlib.com/grocery@dev/emaillist/?html=' + request.session['html']
+    )

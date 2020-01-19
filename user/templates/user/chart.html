@@ -4,6 +4,7 @@
 {% block content %}
 <input hidden id="grocery_list" value="{{ grocery_list }}"></input>
 <input hidden id="pics_list" value="{{ pics }}"></input>
+<input hidden id="macros" value="{{ macros }}"></input>
 
 
 <div class="body-wrapper">
@@ -20,36 +21,33 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-center ftco-animate">
-        <p><button onclick="sendEmail()" class="btn btn-black py-3 px-5">Email Grocery List</button></p>
+        <p><a href="{% url 'user:email' %}" class="btn btn-black py-3 px-5">Email Grocery List</a></p>
     </div>
 </div>
 <br><br>
 </div>
 
 
-
 <script>
-
     var ctx = document.getElementById('myChart').getContext('2d');
+    var macros = document.getElementById('macros').value
 
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Carbs', 'Protein', 'Vegetables', 'Other'],
+            labels: ['Carbs', 'Protein', 'Vegetables'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5],
+                label: 'Number of Calories',
+                data: [macros[2]*4, macros[3]*4, macros[1]*9],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -60,14 +58,6 @@
             }
         }
     });
-
-    function sendEmail() {
-        alert("To DO");
-    }
-
-    function fetchGroceryList() {
-
-    }
 
     function populateGroceryList(arrNames, arrPictures) {
         var bodyToAppend = document.getElementById('groceryList')
