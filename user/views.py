@@ -81,20 +81,20 @@ def FoodView(request, user_choices):
         "veg": ["2 cups spinach", "1 cup mixed vegetables", "2 cups chopped broccoli", "5 spears asparagus"],
         "fruits": ["6 large strawberry", "1 cup blackberry", "1 medium banana", "1 cup blueberry", "1 large apple"]
     }
-    week = []
+    day = []
     random.shuffle(food["breakfast"])
     random.shuffle(food["protein"])
     random.shuffle(food["carbs"])
     random.shuffle(food["veg"])
     random.shuffle(food["fruits"])
-    week = week + food["breakfast"][:2]
-    week = week + food["protein"][:2]
-    week = week + food["carbs"][:2]
-    week = week + food["veg"][:2]
-    week = week + food["fruits"][:2]
-    week = week + choice
+    day = day + food["breakfast"][:2]
+    day = day + food["protein"][:2]
+    day = day + food["carbs"][:2]
+    day = day + food["veg"][:2]
+    day = day + food["fruits"][:2]
+    day = day + choice
 
-    cal, ft, pro, cb, limit = nutrient_req(week, remaining)
+    cal, ft, pro, cb, limit = nutrient_req(day, remaining)
 
     calories += cal
     fat += fat
