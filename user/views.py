@@ -87,9 +87,9 @@ def FoodView(request, user_choices):
     }
     remaining = 0
 
-    if (person_data.desired_weight > person_data.current_weight) remaining = person_data.calorie + person_data.increment
-    elif (person_data.desired_weight < person_data.current_weight)remaining = person_data.calorie - person_data.increment
-    else remaining = person_data.calorie
+    if (person_data.desired_weight > person_data.current_weight): remaining = person_data.calorie + person_data.increment
+    elif (person_data.desired_weight < person_data.current_weight): remaining = person_data.calorie - person_data.increment
+    else: remaining = person_data.calorie
 
     food = {
         "protein": ["1 chicken breast", "1 steak", "2 large eggs", "1 fillet salmon", "1 fillet cod"],
