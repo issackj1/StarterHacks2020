@@ -10,6 +10,7 @@ class HomeView(TemplateView):
 class DashboardView(TemplateView):
     template_name = "user/dashboard.html"
     
+
 def CalorieConversion(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -46,3 +47,17 @@ def search_box(request, input):
     json_response = response.json()["common"][:5]
     return JsonResponse(json_response, safe=False)
 
+def FoodView(request, user_choices):
+    for item in user_choices:
+        requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
+        headers = {
+            "Content-Type": "application/json"
+            "x-app-id": "728a7023",
+            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"},
+            json = {
+                'query': item['serving_qty'] + ' ' + item['serving_unit']
+                + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
+
+        
+        
+    return render(request.text, "", context)
