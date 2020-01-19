@@ -3,60 +3,131 @@
 
 {% block content %}
 
-<br>
-<br>
-<br>
-<div class="container searchContainer mt-5">
-    <div class="search card card-body">
-        <h1>Search your favourite food!</h1>
-        <p class="lead">Enter food you would like to eat</p>
-        <input type="text" id="searchFood" class="form-control" placeholder="Food name...">
-    </div>
     <br>
-    <div id="food_div">
-        <ul id="food_list" class="list-unstyled">
+    <br>
+    <div class="container searchContainer mt-5">
+        <div class="search card card-body">
+            
+            <h2 >Search your favourite food!</h2>
+            <p class="lead">Enter food you would like to eat</p>
+            <input type="text" id="searchFood" class="form-control" placeholder="Food name...">
+        </div>
+        <br>
+        <div class="row">
 
-        </ul>
+        
+        <div id="food_div"class='col-5 ml-0 mr-auto'>
+            <ul id='food_list'>
+
+            </ul>
+        </div>
+
+        <div id="picked_food" class='col-3 ml-auto mr-0'>
+            <h3>Your picked items:</h3>
+            <ul id='confirmed_list'>
+
+            </ul>
+        </div>
+        </div>
+        <div class='row fixed-bottom col-2 mr-auto mb-5' style="width:800px;margin:0 auto">
+            <a href="#"><button onClick='submit_data()' class='btn btn-primary'type="submit">Submit</button></a>
+        </div>
     </div>
-    <div id="picked_food"></div>
-</div>
 
 {% endblock %}
 
 {% block javascript %}
-<script>
+    <script>
 
-    $(document).ready(function () {
-        const searchFood = document.getElementById('searchFood');
+        $(document).ready(function () {
 
-        $("#searchFood").on('keyup', async e => {
-            const userText = e.target.value
+            let grocery_list = []
+            
+            const searchFood = document.getElementById('searchFood');
+            searchFood.addEventListener('keyup', debounce (async e => {
+                
+                const userText = e.target.value
 
-            if (userText !== '') {
-                let response = await fetch(`/user/search/${userText}`);
-                let data = await response.json();
-                populateList(data)
+                if (userText !== '') {
+                    let response = await fetch(`/user/search/${userText}`);
+                    let data = await response.json();
+                    populateList(data)
+                }
+            },1000))
+
+        });
+        
+        function populateList(data) {
+            console.log(data);
+            $('#food_list').empty();
+            let foodList= document.getElementById('food_list');
+            let output = ''
+            data.forEach(item => {
+                output+=`
+                    <li class="row">
+                    
+                    <a style="color:black" onClick="clearAll(this)" value="${item.serving_unit}" data-value=${item.photo.thumb} class="food-item" href="#"><img style="width:40px;height="40px"""  src="${item.photo.thumb}" alt=""> ${item.food_name} </a>
+                        
+                        
+                    </li>
+                
+                `
+
+                }
+                
+            )
+            
+            foodList.innerHTML=output
+        }
+
+        function clearAll(a){
+            let foodList= document.getElementById('food_list');
+            let serving_unit = a.getAttribute('value');
+            let serving_qty = 1;
+            let src = a.getAttribute('data-value');
+            let item = {
+                "food_name": a.innerText,
+                "serving_unit": serving_unit,
+                "serving_qty": serving_qty
             }
-        })
 
-    });
-
-    function populateList(data) {
-        console.log(data);
-        $(food_list).empty();
-        let foodList = document.getElementById('food_list');
-        data.forEach(item => {
-            //creat li
-
-
-            let li = document.createElement('li');
-            let textnode = document.createTextNode(item.food_name);
-            li.append(textnode);
-            foodList.appendChild(li);
+            $('#confirmed_list').append(`<li class="row">
+                    
+                ${a.innerHTML}
+                    
+                </li>`)
+            $('#searchFood').val('');
+            foodList.innerHTML = ''
+            grocery_list.append(item);
 
         }
-        )
-    }
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
 
-</script>
+        function submit_data(){
+            fetch(`/user/detail/${grocery_list}/`)
+        }
+
+
+            //const picked_food= document.getElementById('picked_food')
+            //picked_food.addEventListener('onclick',e=>{
+              //  console.log(e.target)
+            //})
+
+
+        
+
+    </script>
 {% endblock %}
