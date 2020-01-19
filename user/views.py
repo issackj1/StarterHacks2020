@@ -131,12 +131,12 @@ def FoodView(request, user_choices):
 
     grlist = []
     html = '<p>Hi ' + request.session['fname'] + ',</p></br>'
-    html += "<p>Here is your weekly grocery shopping list:</p></br>"
+    html += "<p>Here is your weekly grocery shopping list:</p>"
     html += "<ul>"
     for item in day:
         grlist.append(pack[item])
         html += '<li>' + pack[item] + '</li>'
-    html += "</ul></br><p>Enjoy,</p></br><p>Your friends at Fulfilled</p>"
+    html += "</ul></br><p>Enjoy,</p><p>Your friends at Fulfilled</p>"
 
     requests.get(
     'https://billwu95.api.stdlib.com/grocery@dev/emaillist/?html=' + html
