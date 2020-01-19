@@ -10,5 +10,6 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
-    path('search/<str:input>/', views.search_box, name='search')
+    path('search/<str:input>/', views.search_box, name='search'),
+    path('details/<str:user_choices>/', views.FoodView, name='data')
 ]
