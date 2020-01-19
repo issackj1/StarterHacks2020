@@ -1,6 +1,6 @@
 from django import forms
 
-def InputValueGetter(forms.Form):
+class Data(forms.Form):
     name = forms.CharField(name='name', max_length=100)
     email = forms.CharField(name='email')
     cweight = forms.CharField(name='cweight')

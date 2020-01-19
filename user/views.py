@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import JsonResponse, HttpResponse
 from .models import User
+from django.shortcuts import redirect
 
 class HomeView(TemplateView):
     template_name = "user/home.html"
@@ -61,3 +62,7 @@ def FoodView(request, user_choices):
                 + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
         
     return render(request.text, "", context)
+
+def data(request):
+    response = redirect('/food-search/')
+    return response
