@@ -1,0 +1,61 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+    <div class="container searchContainer mt-5">
+        <div class="search card card-body">
+            <h1>Search your favourite food!</h1>
+            <p class="lead">Enter food you would like to eat</p>
+            <input type="text" id="searchFood" class="form-control" placeholder="Food name...">
+        </div>
+        <br>
+        <div id="food_div">
+            <ul id="food_list" class="list-unstyled">
+
+            </ul>
+        </div>
+        <div id="picked_food"></div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        $(document).ready(function () {
+            const searchFood = document.getElementById('searchFood');
+            searchFood.addEventListener('keyup', async e => {
+                const userText = e.target.value
+
+                if (userText !== '') {
+                    let response = await fetch(`/user/search/${userText}`);
+                    let data = await response.json();
+                    populateList(data)
+                }
+            })
+
+        });
+
+        function populateList(data) {
+            console.log(data);
+            $(food_list).empty();
+            let foodList= document.getElementById('food_list');
+            data.forEach(item => {
+                //creat li
+                
+
+                let li = document.createElement('li');
+                let textnode = document.createTextNode(item.food_name);
+                li.append(textnode);
+                foodList.appendChild(li);
+
+                }
+            )
+        }
+
+    </script>
+{% endblock %}

@@ -11,6 +11,9 @@ class AboutView(TemplateView):
      template_name = "user/about.html"
 class DashboardView(TemplateView):
     template_name = "user/dashboard.html"
+
+class SearchView(TemplateView):
+    template_name = "user/search.html"
     
 
 def CalorieConversion(request):
