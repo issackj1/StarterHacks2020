@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import JsonResponse, HttpResponse
@@ -25,7 +26,7 @@ def CalorieConversion(request):
 
     cur_calorie = (cur_protein * 4) + (cur_carbs * 4) + (cur_fat * 9)
     des_calorie = (des_protein * 4) + (des_carbs * 4) + (des_fat * 9)
-# Absolute value divided by four, for a positive 4 week increment
+    # Absolute value divided by four, for a positive 4 week increment
     abs_increment = round(abs((cur_calorie - des_calorie) / 4), 0)
 
     User(first_name = form.cleaned_data['First Name'],
@@ -33,4 +34,15 @@ def CalorieConversion(request):
      current_weight = cur_weight, desired_weight = des_weight,
      increment = abs_increment, protein = des_protein, carbs = des_carbs,
      fat = des_fat, email = form.cleaned_data['Email'],
-     date = form.cleaned_data['Date']).save()
+     date=form.cleaned_data['Date']).save()
+     
+def search_box(input):
+    response = requests.get(
+        "https://trackapi.nutritionix.com/v2/search/instant?query=".append(input),
+        headers={
+            "x-app-id": "728a7023",
+            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"}
+        )
+    json_response = response.json()["common"][:5]
+    return json_response
+
