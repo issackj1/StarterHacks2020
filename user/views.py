@@ -59,6 +59,7 @@ def search_box(request, input):
 def FoodView(request, user_choices):
     calories, fat, protein, carbs = 0, 0, 0, 0
     remaining = 0
+    person_data = User.objects.filter(first_name=request.session['fname'], last_name=request.session['lname'])
     if (person_data.desired_weight > person_data.current_weight): remaining = person_data.calorie + person_data.increment
     elif (person_data.desired_weight < person_data.current_weight): remaining = person_data.calorie - person_data.increment
     else: remaining = person_data.calorie
@@ -72,7 +73,6 @@ def FoodView(request, user_choices):
     calories, fat, protein, carbs, lim = nutrient_req(choice, remaining)
     remaining = lim
 
-    person_data = User.objects.filter(first_name=request.session['fname'], last_name=request.session['lname'])
 
     food = {
         "breakfast": ["2 large eggs", "3 oz ground turkey", "1 medium muffin", "1 cup oatmeal", "2 pancakes"],
