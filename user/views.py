@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import JsonResponse, HttpResponse
 from .models import User
+from django.shortcuts import redirect
 
 class HomeView(TemplateView):
     template_name = "user/home.html"
@@ -98,4 +99,6 @@ def FoodView(request, user_choices):
         "fruits": ["6 large strawberry", "1 cup blackberry", "1 medium banana", "1 cup blueberry", "1 large apple"]
     }
 
-    return render(request, "", context)
+def data(request):
+    response = redirect('/food-search/')
+    return response
