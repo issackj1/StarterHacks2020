@@ -50,8 +50,12 @@ def search_box(request, input):
     return JsonResponse(json_response, safe=False)
 
 def FoodView(request, user_choices):
+    calories = 0
+    fat = 0
+    protein = 0
+    carbs = 0
     for item in user_choices:
-        requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
+        response = requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
         headers = {
             "Content-Type": "application/json",
             "x-app-id": "728a7023",
@@ -59,5 +63,13 @@ def FoodView(request, user_choices):
             json = {
                 'query': item['serving_qty'] + ' ' + item['serving_unit']
                 + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
+
+        text = response.text.json()
+        calories += text['nf_calories']
+        fat += text['nf_total_fat']
+        carbs += text['nf_total_carbohydrate']
+        protein += text['nf_protein']
+
+        person_data = User.objects.all()
         
     return render(request.text, "", context)
