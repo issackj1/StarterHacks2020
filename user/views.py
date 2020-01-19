@@ -144,7 +144,7 @@ def FoodView(request, user_choices):
                 })
         pics.append(res.json()["common"][0]['photo']['thumb'])
         html += '<li>' + pack.get(item, item) + '</li>'
-    html += "</ul></br><p>Enjoy,</p><p>Your friends at Fulfilled</p>"
+    html += "</ul></br><p>Enjoy,</p><p>Your friends at Foodify</p>"
     request.session['html'] = html
     request.session['macros'] = [cal, ft, cb, pro]
     request.session['grocery_list'] = grlist
