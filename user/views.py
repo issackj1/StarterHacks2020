@@ -7,6 +7,8 @@ from .models import User
 class HomeView(TemplateView):
     template_name = "user/home.html"
 
+class AboutView(TemplateView):
+     template_name = "user/about.html"
 class DashboardView(TemplateView):
     template_name = "user/dashboard.html"
     
@@ -51,7 +53,7 @@ def FoodView(request, user_choices):
     for item in user_choices:
         requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
         headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
             "x-app-id": "728a7023",
             "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"},
             json = {
