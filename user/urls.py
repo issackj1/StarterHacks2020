@@ -15,5 +15,7 @@ urlpatterns = [
     url('data/', views.CalorieConversion, name='data'),
     path('search-food/', views.SearchView.as_view(), name='search-food'),
     path('search/<str:input>/', views.search_box, name='search'),
+    path('chart/', views.ChartView.as_view(), name='chart'),
     path('details/<str:user_choices>/', views.FoodView, name='data')
+
 ]
