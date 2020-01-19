@@ -48,7 +48,7 @@
                                 </div>
                                 <input type="button" name="previous" class="previous action-button-previous"
                                     value="Previous" />
-                                <input type="button" name="next" class="next action-button" value="Next" />
+                                <input id="btn-2" type="button" name="next" class="next action-button" value="Next" />
                             </fieldset>
                             <fieldset>
                                 <div class="form-card">
@@ -60,8 +60,8 @@
                                         <li> </li>
                                         <li value="{{ form.cweight.value }}"> </li>
                                     </ul> -->
-                                    <h2 class="fs-title text-center">Success!</h2> <br>
-                                    <h5>Your Total Daily Calories: </h5>
+                                    <!-- <h2 class="fs-title text-center">Success!</h2> <br> -->
+                                    <!-- <h5>Your Total Daily Calories: </h5> -->
                                     <div class="row justify-content-center">
                                         <div class="col-3 justify-content-center"> <img
                                                 src="https://media1.giphy.com/media/pZCvWKwehPyUM/giphy.gif"
@@ -70,7 +70,9 @@
                                     </div>
                                     <br><br>
                                 </div>
-                                <input type="submit" name="submit" class="action-button" value="Submit" />
+                                <input id="myInput" style="opacity: 0;" type="submit" name="submit"
+                                    class="action-button" value="Submit" />
+
                             </fieldset>
                         </form>
                     </div>
@@ -389,6 +391,13 @@
         var name = $('#name').attr('value')
 
         $('#props').append(`<li>${name}</li>`)
+
+        $("#btn-2").click(() => {
+            setTimeout(() => {
+                $("#myInput").click()
+            }, 1000)
+        })
+
 
 
     });

@@ -66,24 +66,11 @@ def FoodView(request, user_choices):
                 "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"
                 },
             json = {
-                'query': str(item['serving_qty']) + ' ' + 
-                str(item['serving_unit'])
-                + ' ' + item['food_name'], 'timezone': "US/Eastern"
-                }
-        )
+                'query': item['serving_qty'] + ' ' + item['serving_unit']
+                + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
+        
+    return render(request.text, "", context)
 
-        text = response.json()['foods'][0]
-        calories += text['nf_calories']
-        fat += text['nf_total_fat']
-        carbs += text['nf_total_carbohydrate']
-        protein += text['nf_protein']
-
-    person_data = User.objects.filter(first_name=request.sessions['firstname'], last_name=request.sessions['lastname'])
-    context = {
-        "calories": calories,
-        "fat": fat,
-        "carbs": carbs,
-        "protein": protein
-    }
-
-    return render(request, "", context)
+def data(request):
+    response = redirect('/food-search/')
+    return response
