@@ -123,11 +123,11 @@ def FoodView(request, user_choices):
     random.shuffle(food["carbs"])
     random.shuffle(food["veg"])
     random.shuffle(food["fruits"])
-    day = day + food["breakfast"][:1]#2
-    day = day + food["protein"][:1]#3
-    day = day + food["carbs"][:1]#3
-    day = day + food["veg"][:1]#3
-    day = day + food["fruits"][:1]#2
+    day = day + food["breakfast"][:2]
+    day = day + food["protein"][:3]
+    day = day + food["carbs"][:1]
+    day = day + food["veg"][:3]
+    day = day + food["fruits"][:2]
     random.shuffle(day)
     day = day + choice
 
@@ -199,4 +199,4 @@ def email(request):
         "grocery_list": request.session['grocery_list'],
         "pics": request.session['pics']
     }
-    return render(request, "user/chart.html", context)
+    return render(request, "user/thanks.html", context)

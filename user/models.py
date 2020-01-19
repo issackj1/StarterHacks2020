@@ -20,5 +20,5 @@ class User(models.Model):
         unique_together = ('first_name', 'last_name', 'email')
 
     def __str__(self):
-        return "{} {} {} {}".format(self.first_name, self.last_name, self.email, calorie)
+        return "{} {} {} {}".format(self.first_name, self.last_name, self.email, self.calorie)
         
