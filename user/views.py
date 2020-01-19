@@ -59,8 +59,8 @@ def search_box(request, input):
     response = requests.get(
         "https://trackapi.nutritionix.com/v2/search/instant?query=" + input,
         headers = {
-                "x-app-id": "374e42c3",
-                "x-app-key": "a72789b7335359c0904b4d50a3af742e"
+                "x-app-id": "3b53b251",
+                "x-app-key": "25760861bbaf8a04547c6ef381fca7b7"
                 })
     json_response = response.json()["common"][:5]
     return JsonResponse(json_response, safe=False)
@@ -139,8 +139,8 @@ def FoodView(request, user_choices):
         res = requests.get(
         "https://trackapi.nutritionix.com/v2/search/instant?query=" + item,
         headers = {
-                "x-app-id": "374e42c3",
-                "x-app-key": "a72789b7335359c0904b4d50a3af742e"
+                "x-app-id": "3b53b251",
+                "x-app-key": "25760861bbaf8a04547c6ef381fca7b7"
                 })
         pics.append(res.json()["common"][0]['photo']['thumb'])
         html += '<li>' + pack.get(item, item) + '</li>'
@@ -171,8 +171,8 @@ def nutrient_req(arr, cal, fat, protein, carbs, limit):
         response = requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
             headers = {
                 "Content-Type": "application/json",
-                "x-app-id": "374e42c3",
-                "x-app-key": "a72789b7335359c0904b4d50a3af742e"
+                "x-app-id": "3b53b251",
+                "x-app-key": "25760861bbaf8a04547c6ef381fca7b7"
                 },
             json = {
                 'query': item,
