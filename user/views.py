@@ -52,31 +52,34 @@ def search_box(request, input):
     return JsonResponse(json_response, safe=False)
 
 def FoodView(request, user_choices):
-    calories = 0
-    fat = 0
-    protein = 0
-    carbs = 0
+    calories, fat, protein, carbs = 0, 0, 0, 0
     arr = json.loads(user_choices)
     for item in arr:
         response = requests.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
-        headers = {
-            "Content-Type": "application/json",
-            "x-app-id": "728a7023",
-            "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"},
+            headers = {
+                "Content-Type": "application/json",
+                "x-app-id": "728a7023",
+                "x-app-key": "f8e3dbfdcbf2ed6634fc902128695159"
+                },
             json = {
                 'query': str(item['serving_qty']) + ' ' + 
                 str(item['serving_unit'])
-                + ' ' + item['food_name'], 'timezone' : "US/Eastern"})
+                + ' ' + item['food_name'], 'timezone': "US/Eastern"
+                }
+        )
 
-        text = response.json()
-        print(text)
+        text = response.json()['foods'][0]
         calories += text['nf_calories']
         fat += text['nf_total_fat']
         carbs += text['nf_total_carbohydrate']
         protein += text['nf_protein']
 
-        person_data = User.objects.all()
+    person_data = User.objects.filter(first_name=request.sessions['firstname'], last_name=request.sessions['lastname'])
+    context = {
+        "calories": calories,
+        "fat": fat,
+        "carbs": carbs,
+        "protein": protein
+    }
 
-        context = {}
-
-    return JsonResponse(text) #render(request, "", context)
+    return render(request, "", context)
